@@ -22,6 +22,7 @@ import { element, by } from 'protractor';
 export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
+    taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
@@ -40,6 +41,11 @@ export class NavigationBarPage {
     clickContentServicesButton() {
         Util.waitUntilElementIsVisible(this.contentServicesButton);
         this.contentServicesButton.click();
+    }
+
+    clickTaskListButton() {
+        Util.waitUntilElementIsVisible(this.taskListButton);
+        this.taskListButton.click();
     }
 
     clickConfigEditorButton() {
@@ -153,5 +159,9 @@ export class NavigationBarPage {
 
     goToSite(site) {
         browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+    }
+
+    checkContentServicesButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(contentServicesButton);
     }
 }
