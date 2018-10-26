@@ -32,6 +32,7 @@ import AcsUserModel = require('../../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Viewer', () => {
 
@@ -353,6 +354,53 @@ describe('Viewer', () => {
             });
         });
 
+    });
+
+    describe('Display files via API', () => {
+
+        let wordFileInfo = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location
+        });
+
+        let wordFileShared, pngFileShared, wordFileUploaded;
+
+        beforeAll(async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+            wordFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, wordFileInfo.location, wordFileInfo.name, site.entry.guid);
+
+            wordFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({'nodeId': wordFileUploaded.entry.id});
+            pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({'nodeId': pngFileUploaded.entry.id});
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFileUploaded.entry.id);
+            done();
+        });
+
+        it('[C260105] Should be able to open an image file shared via API', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+            viewerPage.checkImgContainerIsDisplayed();
+            browser.get(TestConfig.adf.url);
+            navigationBarPage.clickLogoutButton();
+            browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+            viewerPage.checkImgContainerIsDisplayed();
+        });
+
+        it('[C260106] Should be able to open a Word file shared via API', () => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            browser.get(TestConfig.adf.url + '/preview/s/' + wordFileShared.entry.id);
+            viewerPage.checkFileIsLoaded();
+            browser.get(TestConfig.adf.url);
+            navigationBarPage.clickLogoutButton();
+            browser.get(TestConfig.adf.url + '/preview/s/' + wordFileShared.entry.id);
+            viewerPage.checkFileIsLoaded();
+        });
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {

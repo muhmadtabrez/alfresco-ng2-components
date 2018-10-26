@@ -103,7 +103,7 @@ var DataTablePage = function () {
      * @param {String} row number
      */
     this.selectRowWithKeyboard = function (rowNumber) {
-        var row = this.getRowByRowNumber(rowNumber);
+        let row = this.getRowByRowNumber(rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     };
 
@@ -113,7 +113,7 @@ var DataTablePage = function () {
      * @param {String} selection mode
      */
     this.selectSelectionMode = function (selectionMode) {
-        var selectMode = element(by.cssContainingText("span[class='mat-option-text']", selectionMode));
+        let selectMode = element(by.cssContainingText("span[class='mat-option-text']", selectionMode));
         selectionButton.click();
         Util.waitUntilElementIsVisible(selectionDropDown);
         selectMode.click();
@@ -125,7 +125,7 @@ var DataTablePage = function () {
      * @param {String} row number
      */
     this.checkRowIsSelected = function (rowNumber) {
-        var isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'is-selected')]"));
+        let isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'is-selected')]"));
         Util.waitUntilElementIsVisible(isRowSelected);
     };
 
@@ -135,7 +135,7 @@ var DataTablePage = function () {
      * @param {String} row number
      */
     this.checkRowIsNotSelected = function (rowNumber) {
-        var isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]"));
+        let isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath("ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]"));
         Util.waitUntilElementIsNotOnPage(isRowSelected);
     };
 
@@ -201,7 +201,7 @@ var DataTablePage = function () {
      * @param {String} id
      */
     this.replaceRows = function (id) {
-        var rowID = this.getRowByRowNumber(id);
+        let rowID = this.getRowByRowNumber(id);
         Util.waitUntilElementIsVisible(rowID);
         replaceRows.click();
         Util.waitUntilElementIsNotOnPage(rowID);
@@ -222,7 +222,7 @@ var DataTablePage = function () {
      * @method replaceColumns
      */
     this.checkLoadNode = function (userHome) {
-        var nodeId = element(by.css("div[data-automation-id*='" + userHome + "']"));
+        let nodeId = element(by.css("div[data-automation-id*='" + userHome + "']"));
 
         Util.waitUntilElementIsVisible(loadNode);
         loadNode.click();
@@ -230,13 +230,23 @@ var DataTablePage = function () {
     };
 
     this.getRowsName = function (content) {
-        var row = element(by.css("div[data-automation-id*='" + content + "']"));
+        let row = element(by.css("div[data-automation-id*='" + content + "']"));
         Util.waitUntilElementIsPresent(row);
         return row;
     };
 
+    this.doubleClickRow = function (rowName) {
+        let row = this.getRowByRowName(rowName);
+        Util.waitUntilElementIsVisible(row);
+        Util.waitUntilElementIsClickable(row);
+        row.click();
+        Util.waitUntilElementIsVisible(row.all(by.css("div[class*='--image'] mat-icon[svgicon*='selected']")).first());
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        return this;
+    }
+
     this.getRowByRowName = function (content) {
-        var rowByRowName = by.xpath("ancestor::div[contains(@class, 'adf-datatable-row')]");
+        let rowByRowName = by.xpath("ancestor::div[contains(@class, 'adf-datatable-row')]");
         Util.waitUntilElementIsPresent(this.getRowsName(content).element(rowByRowName));
         return this.getRowsName(content).element(rowByRowName);
     };
@@ -246,7 +256,7 @@ var DataTablePage = function () {
     };
 
     this.insertFilter = function (filterText) {
-        var inputFilter = element(by.xpath("//*[@id=\"adf-datatable-filter-input\"]"));
+        let inputFilter = element(by.xpath("//*[@id=\"adf-datatable-filter-input\"]"));
         inputFilter.clear();
         return inputFilter.sendKeys(filterText);
     };
