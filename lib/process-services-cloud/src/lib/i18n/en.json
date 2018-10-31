@@ -6,5 +6,10 @@
       "SUBTITLE":"Create a new process that you want to easily find later",
       "NONE": "No process instance filter selected."
     }
+  },
+  "START-TASK-CLOUD": {
+    "ERROR": {
+      "MESSAGE": "Enter a different value"
+    }
   }
 }
