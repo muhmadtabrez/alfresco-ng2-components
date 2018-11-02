@@ -27,6 +27,7 @@ import { ProcessCloudModule } from './process-cloud/process-cloud.module';
         AppListCloudModule,
         TaskListCloudModule,
         TaskCloudModule,
-        ProcessCloudModule]
+        ProcessCloudModule
+    ]
 })
 export class ProcessServicesCloudModule { }
