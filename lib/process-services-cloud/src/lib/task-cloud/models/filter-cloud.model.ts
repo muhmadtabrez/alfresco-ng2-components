@@ -33,8 +33,10 @@ export class QueryModel {
         }
     }
 }
-export class FilterRepresentationModel {
+export class FilterCloudRepresentationModel {
+    index: number;
     name: string;
+    key: string;
     icon: string;
     query: QueryModel;
 

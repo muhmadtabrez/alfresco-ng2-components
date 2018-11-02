@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { FilterRepresentationModel } from '../models/filter-cloud.model';
+import { FilterCloudRepresentationModel } from '../models/filter-cloud.model';
 @Component({
     selector: 'adf-cloud-task-filters',
     templateUrl: './task-filters-cloud.component.html',
@@ -30,13 +30,13 @@ export class TaskFiltersCloudComponent implements OnChanges {
     appName: string;
 
     @Input()
-    filterParam: FilterRepresentationModel;
+    filterParam: FilterCloudRepresentationModel;
 
     @Input()
     showIcons: boolean = false;
 
     @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClick: EventEmitter<FilterCloudRepresentationModel> = new EventEmitter<FilterCloudRepresentationModel>();
 
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
@@ -44,11 +44,11 @@ export class TaskFiltersCloudComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    filters$: Observable<FilterRepresentationModel[]>;
+    filters$: Observable<FilterCloudRepresentationModel[]>;
 
-    currentFilter: FilterRepresentationModel;
+    currentFilter: FilterCloudRepresentationModel;
 
-    filters: FilterRepresentationModel [] = [];
+    filters: FilterCloudRepresentationModel [] = [];
 
     constructor(private taskFilterCloudService: TaskFilterCloudService) {
     }
@@ -70,7 +70,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.subscribe(
-            (res: FilterRepresentationModel[]) => {
+            (res: FilterCloudRepresentationModel[]) => {
                 if (res.length === 0) {
                     this.createFilters(appName);
                 } else {
@@ -93,7 +93,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
         this.filters$ =  this.taskFilterCloudService.createDefaultFilters(appName);
 
         this.filters$.subscribe(
-            (resDefault: FilterRepresentationModel[]) => {
+            (resDefault: FilterCloudRepresentationModel[]) => {
                 this.resetFilter();
                 this.filters = resDefault;
             },
@@ -103,22 +103,22 @@ export class TaskFiltersCloudComponent implements OnChanges {
         );
     }
 
-    /**
-     * Pass the selected filter as next
-     */
-    public selectFilter(newFilter: FilterRepresentationModel) {
-        if (newFilter) {
-            this.currentFilter = this.filters.find((filter) =>
-                (newFilter.name &&
-                    (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
-                ));
+    public selectFilter(filterParam: FilterCloudRepresentationModel) {
+        if (filterParam) {
+            this.filters.filter((taskFilter, index) => {
+                if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
+                    filterParam.key && filterParam.key.toLowerCase() === taskFilter.key.toLowerCase()  ||
+                    filterParam.index === index) {
+                    this.currentFilter = taskFilter;
+                }
+            });
         }
         if (!this.currentFilter) {
             this.selectDefaultTaskFilter();
         }
     }
 
-    public selectFilterAndEmit(newFilter: FilterRepresentationModel) {
+    public selectFilterAndEmit(newFilter: FilterCloudRepresentationModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);
     }
@@ -135,7 +135,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
     /**
      * Return the current task
      */
-    getCurrentFilter(): FilterRepresentationModel {
+    getCurrentFilter(): FilterCloudRepresentationModel {
         return this.currentFilter;
     }
 
