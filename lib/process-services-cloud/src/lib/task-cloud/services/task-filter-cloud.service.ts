@@ -18,7 +18,7 @@
 import { LogService, StorageService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { FilterRepresentationModel, QueryModel } from '../models/filter-cloud.model';
+import { FilterCloudRepresentationModel, QueryModel } from '../models/filter-cloud.model';
 
 @Injectable()
 export class TaskFilterCloudService {
@@ -32,7 +32,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<FilterRepresentationModel[]> {
+    public createDefaultFilters(appName: string): Observable<FilterCloudRepresentationModel[]> {
         let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appName);
         let involvedObservable = this.addFilter(involvedTasksFilter);
 
@@ -67,7 +67,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
-    getTaskListFilters(appName?: string): Observable<FilterRepresentationModel[]> {
+    getTaskListFilters(appName?: string): Observable<FilterCloudRepresentationModel[]> {
         let key = 'task-filters-' + appName;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
         return new Observable(function(observer) {
@@ -81,7 +81,7 @@ export class TaskFilterCloudService {
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+    addFilter(filter: FilterCloudRepresentationModel): Observable<FilterCloudRepresentationModel> {
         const key = 'task-filters-' + filter.query.appName || '0';
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
@@ -100,10 +100,11 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getInvolvedTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getInvolvedTasksFilterInstance(appName: string): FilterCloudRepresentationModel {
+        return new FilterCloudRepresentationModel({
             name: 'Cancelled Tasks',
             icon: 'view_headline',
+            key: 'cancelled',
             query: new QueryModel(
                 {
                     appName: appName,
@@ -121,9 +122,10 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getMyTasksFilterInstance(appName: string): FilterCloudRepresentationModel {
+        return new FilterCloudRepresentationModel({
             name: 'My Tasks',
+            key: 'my-task',
             icon: 'inbox',
             query: new QueryModel(
                 {
@@ -142,10 +144,11 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getQueuedTasksFilterInstance(appName: string): FilterCloudRepresentationModel {
+        return new FilterCloudRepresentationModel({
             name: 'Suspended Tasks',
             icon: 'adjust',
+            key: 'suspended',
             query: new QueryModel(
                 {
                     appName: appName,
@@ -163,9 +166,10 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getCompletedTasksFilterInstance(appName: string): FilterCloudRepresentationModel {
+        return new FilterCloudRepresentationModel({
             name: 'Completed Tasks',
+            key: 'completed',
             icon: 'done',
             query: new QueryModel(
                 {
