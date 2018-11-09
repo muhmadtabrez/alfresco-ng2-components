@@ -31,7 +31,6 @@ export class SearchFiltersPage {
     checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
     createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
 
-
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
     }
@@ -108,6 +107,7 @@ export class SearchFiltersPage {
 
     checkCheckListFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
+    }
 
     checkCreatedRangeFilterIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
