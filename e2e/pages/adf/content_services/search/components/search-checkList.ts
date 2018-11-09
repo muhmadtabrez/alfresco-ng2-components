@@ -125,7 +125,7 @@ export class SearchCheckListPage {
         let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
             let numberOfBucket = valueOfBucket.split('(')[1];
             let totalNumberOfBucket = numberOfBucket.split(')')[0];
-            return totalNumberOfBucket;
+            return totalNumberOfBucket.trim();
         });
 
         return bucketNumber;
