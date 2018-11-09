@@ -30,9 +30,14 @@ export class SearchFiltersPage {
     nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
     checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
     typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
+    createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
+    }
+
+    createdDateRangeFilterPage() {
+        return this.searchCategoriesPage.dateRangeFilter(this.createdDateRangeFilter);
     }
 
     textFiltersPage() {
@@ -122,6 +127,20 @@ export class SearchFiltersPage {
 
     clickTypeFilterHeader() {
         this.searchCategoriesPage.clickFilterHeader(this.typeFilter);
+    }
+  
+    checkCreatedRangeFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
+        return this;
+    }
+
+    clickCreatedRangeFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.createdDateRangeFilter);
+        return this;
+    }
+
+    checkCreatedRangeFilterIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.createdDateRangeFilter);
         return this;
     }
 }
