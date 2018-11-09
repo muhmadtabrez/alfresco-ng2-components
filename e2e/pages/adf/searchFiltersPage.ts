@@ -30,6 +30,7 @@ export class SearchFiltersPage {
     nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
     checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
 
+
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
     }
@@ -97,6 +98,11 @@ export class SearchFiltersPage {
 
     checkFileSizeFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
+        return this;
+    }
+
+    checkCheckListFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
         return this;
     }
 }
