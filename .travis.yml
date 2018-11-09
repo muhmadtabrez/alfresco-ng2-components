@@ -29,6 +29,7 @@ jobs:
           script:
             - ./scripts/lint.sh
             - npm run spellcheck
+            - npm run stylelint
         - stage: Unit test
           env: STAGE=core
           script:  (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
