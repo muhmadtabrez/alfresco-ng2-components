@@ -128,7 +128,7 @@ export class SearchFiltersPage {
     clickTypeFilterHeader() {
         this.searchCategoriesPage.clickFilterHeader(this.typeFilter);
     }
-  
+
     checkCreatedRangeFilterIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
         return this;

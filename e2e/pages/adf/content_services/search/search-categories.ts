@@ -35,7 +35,7 @@ export class SearchCategoriesPage {
     radioFiltersPage(filter) {
         return new SearchRadioPage(filter);
     }
-  
+
     dateRangeFilter(filter) {
         return new DateRangeFilterPage(filter);
     }
