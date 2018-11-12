@@ -36,15 +36,15 @@ var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
     var replaceColumns = element(by.xpath("//span[contains(text(),'Replace columns')]/.."));
     var createdOnColumn = element(by.css("div[data-automation-id='auto_id_createdOn']"));
     var pageLoaded = element(by.css("div[data-automation-id='auto_id_id']"));
-<<<<<<< HEAD
+
     var tableBody = element.all(by.css("div[class='adf-datatable-body']")).first();
     var spinner = element(by.css('mat-progress-spinner'));
 
-=======
-    var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
+
+    //var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
     var rows = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']");
     var nameColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span");
->>>>>>> [ADF-3438] Add tests for task list demo page:
+
 
     this.goToDatatable = function () {
         browser.driver.get(dataTableURL);
@@ -273,8 +273,6 @@ var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
         inputFilter.clear();
         return inputFilter.sendKeys(filterText);
     };
-
-<<<<<<< HEAD
 
     this.getNodeIdFirstElement = function () {
         let firstNode = element.all(by.css('adf-datatable div[title="Node id"] span')).first();

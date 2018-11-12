@@ -21,6 +21,7 @@ var DataTablePage = require('../dataTablePage');
 var TasksListPage = function () {
 
     var taskList = element(by.css("adf-tasklist"));
+    var noTasksFound = element(by.css("p[class='adf-empty-content__title']"));
 
     var dataTable = new DataTablePage(taskList);
 
@@ -28,10 +29,15 @@ var TasksListPage = function () {
         return dataTable;
     };
 
-    this.checkTaskListIsLoaded = function () {
+    this.checkTaskListIsLoaded = function() {
         Util.waitUntilElementIsVisible(taskList);
         return this;
     };
+
+    this.getNoTasksFoundMessage = function() {
+        Util.waitUntilElementIsVisible(noTasksFound);
+        return noTasksFound.getText();
+    }
 
 };
 
