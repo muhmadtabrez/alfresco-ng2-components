@@ -67,7 +67,7 @@ describe('AccordionGroupComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerText = element.querySelector('#heading-text');
-            let headerIcon = element.querySelector('#adf-expansion-panel-id .material-icons');
+            let headerIcon = element.querySelector('#adf-expansion-panel-id .adf-material-icons');
             expect(headerText.innerText).toEqual('Fake Header');
             expect(headerIcon.innerText).toEqual('fake-icon');
         });
@@ -80,7 +80,7 @@ describe('AccordionGroupComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerText = element.querySelector('#heading-text');
-            let headerIcon = element.querySelector('#adf-expansion-panel-id .material-icons');
+            let headerIcon = element.querySelector('#adf-expansion-panel-id .adf-material-icons');
             expect(headerText.innerText).toEqual('Fake Header');
             expect(headerIcon).toBeNull();
         });
@@ -95,7 +95,7 @@ describe('AccordionGroupComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerText = element.querySelector('#heading-text');
-            let headerIcon = element.querySelector('#heading-icon .material-icons');
+            let headerIcon = element.querySelector('#heading-icon .adf-material-icons');
             let content = element.querySelector('#adf-expansion-panel-content-id').innerHTML;
             expect(headerText.innerText).toEqual('Fake Header');
             expect(headerIcon.innerText).toEqual('fake-icon');
